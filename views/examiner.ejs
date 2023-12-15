@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("layouts/header",{title:"Examiner"}) %>
+  <body id="page-top">
+    <%- include("layouts/navbar") %>
+
+    <header class="mainhead no-bg-image">
+      <div class="container">
+        <div class="mainhead-heading text-uppercase">Examiner</div>
+      </div>
+    </header>
+
+    <section class="page-section container mt-4">
+      <h2>Test Type Selector</h2>
+
+      <form method="GET" action="/examiner/testType">
+        <div class="d-flex gap-3">
+          <select
+            class="form-control w-25 mt-3"
+            id="testTypeSelect"
+            name="t_select"
+          >
+            <option value="" selected disabled>Select Test Type</option>
+            <option value="G2">G2</option>
+            <option value="G">G</option>
+          </select>
+          <button class="btn btn-primary align-self-end" type="submit">
+            Select
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-5">
+        <p class="fw-bold">
+          Selected Test Type:
+          <span id="selectedTestType"><%= selectedType ?? "None" %></span>
+        </p>
+      </div>
+
+      <% if(selectedType) {%>
+      <div class="mt-3">
+        <% if(data.length > 0) { %>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Age</th>
+              <th scope="col">Appointment</th>
+
+              <th scope="col">Model</th>
+              <th scope="col">Plate Number</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <% data.forEach((driver,index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= driver.firstName %> <%= driver.lastName %></td>
+            <td><%= driver.age %></td>
+            <td>
+              <%= driver.appointment ?
+              driver.appointment.date.toLocaleDateString() : 'No Appointment' %>
+              <%= driver.appointment.time %>
+            </td>
+
+            <td><%= driver.car_details?.model %></td>
+            <td><%= driver.car_details?.plateNo %></td>
+            <td>
+              <span
+                class="badge <%= typeof driver.isPass === 'boolean'?driver.isPass?'bg-info':'bg-danger':'bg-secondary' %>"
+                ><%= typeof driver.isPass === 'boolean'?driver.isPass ?
+                "Pass":"Fail":"N/A" %></span
+              >
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-success"
+                data-toggle="modal"
+                data-target="#driverModal<%= driver._id %>"
+              >
+                Edit
+              </button>
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="driverModal<%= driver._id %>"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="driverModalLabel<%= driver._id %>"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <form method="POST" action="/examiner">
+                      <div class="modal-header">
+                        <h5
+                          class="modal-title"
+                          id="driverModalLabel<%= driver._id %>"
+                        >
+                          Driver Details
+                        </h5>
+                        <button
+                          type="button"
+                          class="close btn-close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <input
+                          type="hidden"
+                          id="userId"
+                          name="userId"
+                          value="<%= driver._id %>"
+                        />
+
+                        <label class="form-label">Pass/Fail</label>
+                        <div class="d-flex gap-4">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              id="pass"
+                              name="passFail"
+                              value="1"
+                              checked
+                            />
+                            <label class="form-check-label" for="pass"
+                              >Pass</label
+                            >
+                          </div>
+
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              id="fail"
+                              name="passFail"
+                              value="0"
+                            />
+                            <label class="form-check-label" for="fail"
+                              >Fail</label
+                            >
+                          </div>
+                        </div>
+                        <label for="comment" class="form-label mt-3"
+                          >Comment</label
+                        >
+                        <textarea
+                          class="form-control"
+                          id="comment"
+                          name="comment"
+                          rows="3"
+                        ></textarea>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-dismiss="modal"
+                        >
+                          Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <% }); %>
+        </table>
+        <% } else { %>
+        <p>No drivers with appointments found.</p>
+        <% } %>
+      </div>
+      <% } %>
+    </section>
+
+    <% if(successMsg) {%>
+    <div class="bg-success text-white p-3 text-center toast-msg mb-3">
+      <%= successMsg %>
+    </div>
+    <% } %> <%- include("layouts/footer"); %>
+    <!-- script include -->
+    <%- include("layouts/script") %>
+  </body>
+</html>

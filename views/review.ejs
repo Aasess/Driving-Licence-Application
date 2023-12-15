@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("layouts/header",{title:"Driver Review"}) %>
+  <body id="page-top">
+    <%- include("layouts/navbar") %>
+
+    <header class="mainhead no-bg-image">
+      <div class="container">
+        <div class="mainhead-heading text-uppercase">Driver Review</div>
+      </div>
+    </header>
+
+    <section class="page-section container">
+      <% if (user.comment && typeof user.isPass !== 'undefined') { %>
+
+      <div>
+        <h2>Comment:</h2>
+        <p><%= user.comment %></p>
+      </div>
+
+      <div>
+        <h2>Status:</h2>
+        <span
+          class="badge <%= typeof user.isPass === 'boolean'?user.isPass?'bg-info':'bg-danger':'bg-secondary' %>"
+          ><%= typeof user.isPass === 'boolean'?user.isPass ?
+          "Pass":"Fail":"N/A" %></span
+        >
+      </div>
+      <% } else { %>
+
+      <h2 class="text-secondary text-center">
+        Waiting for result from examiner
+      </h2>
+
+      <% } %>
+    </section>
+
+    <%- include("layouts/footer"); %>
+    <!-- script include -->
+    <%- include("layouts/script") %>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("layouts/header",{title:"Appointment"}) %>
+  <body id="page-top">
+    <%- include("layouts/navbar") %>
+
+    <header class="mainhead no-bg-image">
+      <div class="container">
+        <div class="mainhead-heading text-uppercase">Appointment</div>
+      </div>
+    </header>
+
+    <section class="page-section container">
+      <div id="calendar" class="row justify-content-center d-flex">
+        <form method="GET" action="/appointment">
+          <div class="form-group d-flex gap-4">
+            <div class="flex-grow-1">
+              <label for="appointmentDate" class="form-label"
+                >Select Appointment Date:</label
+              >
+              <input
+                type="date"
+                class="form-control"
+                id="appointmentDate"
+                name="appointmentDate"
+                required
+              />
+            </div>
+
+            <div class="align-self-end">
+              <button type="submit" class="btn btn-primary" id="submitBtn">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <% if(selectedDate) {%>
+        <h2 class="mt-4">Date: <%= selectedDate %></h2>
+        <div class="container row gap-2">
+          <% foundAppointment.map(appointment => { %> <% if
+          (appointment.isTimeSlotAvailable) { %>
+          <button
+            class="col-sm-3 admin-slot__available"
+            data-date="<%= appointment.date %>"
+            data-time="<%= appointment.time %>"
+            disabled
+          >
+            <%= appointment.time %>
+          </button>
+          <% } else { %>
+          <button
+            class="col-sm-3 admin-slot__not-available"
+            data-date="<%= appointment.date %>"
+            data-time="<%= appointment.time %>"
+          >
+            <%= appointment.time %>
+          </button>
+          <% } %> <% }) %> <% } %>
+        </div>
+      </div>
+    </section>
+
+    <%- include("layouts/footer"); %>
+    <!-- script include -->
+    <%- include("layouts/script") %>
+  </body>
+</html>

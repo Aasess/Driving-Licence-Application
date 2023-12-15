@@ -1,0 +1,52 @@
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">Book DriveTest</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      Menu
+      <i class="fas fa-bars ms-1"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/">Dashboard</a></li>
+        <% if(isDriverLoggedIn) {%>
+        <li class="nav-item">
+          <a class="nav-link" href="/license/g2">G2_Test</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/license/g">G_Test</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/driver-review">Driver Review</a>
+        </li>
+        <% }else if(isAdminLoggedIn) {%>
+        <li class="nav-item">
+          <a class="nav-link" href="/appointment">Appointment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/driver-status">Driver Status</a>
+        </li>
+        <% }else if(isExaminerLoggedIn) {%>
+        <li class="nav-item">
+          <a class="nav-link" href="/examiner">Examiner</a>
+        </li>
+        <% } %>
+        <li class="nav-item">
+          <% if(!isLoggedIn) { %>
+          <a class="nav-link" href="/auth">Signup/Login</a>
+          <% }else { %>
+          <a class="nav-link" href="/logout">Logout</a>
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("layouts/header",{title:"Dashboard"}) %>
+  <body id="page-top">
+    <%- include("layouts/navbar") %>
+
+    <header class="mainhead">
+      <div class="container">
+        <div class="mainhead-heading text-uppercase">Dashboard</div>
+        <div class="mainhead-subheading">DriveTest Booking Kiosk</div>
+      </div>
+    </header>
+
+    <section class="page-section">
+      <div class="container">
+        <% for(var i=0;i<blogs.length;i++) { %>
+        <div class="blog border rounded px-4 py-2 mb-4">
+          <h2 class="section-heading">
+            <%= blogs[i].title %>
+          </h2>
+          <p class="text-muted">
+           <%= blogs[i].content %>
+          </p>
+          <div class="d-flex gap-2">
+            <p class="text-muted">Posted by</p>
+            <p class="fst-italic"><%= blogs[i].postedBy %></p>
+          </div>
+        </div>
+    <%}%>
+      </div>
+    </section>
+
+    <%- include("layouts/footer"); %>
+    <!-- script include -->
+    <%- include("layouts/script") %>
+  </body>
+</html>

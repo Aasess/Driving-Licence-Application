@@ -1,0 +1,30 @@
+.slot {
+  background-color: #0ae60a59;
+  padding: 10px;
+  border: 1px solid green;
+  border-radius: 4px;
+  margin: 5px;
+  text-align: center;
+}
+
+.slot__disabled {
+  background-color: lightgray;
+}
+
+.admin-slot__not-available {
+  background-color: #0ae60a59;
+  padding: 10px;
+  border: 1px solid green;
+  border-radius: 4px;
+  margin: 5px;
+  text-align: center;
+}
+
+.admin-slot__available {
+  background-color: lightgray;
+  padding: 10px;
+  border: 1px solid green;
+  border-radius: 4px;
+  margin: 5px;
+  text-align: center;
+}
